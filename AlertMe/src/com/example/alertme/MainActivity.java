@@ -1,8 +1,14 @@
 package com.example.alertme;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 import com.example.alertme.models.impl.AlarmListImpl;
 
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -63,13 +69,25 @@ public class MainActivity extends Activity implements LocationListener{
 		// TODO Auto-generated method stub
 		double latitude = (double) location.getLatitude();
 		double longitude = (double) location.getLongitude();
+		Geocoder geoCoder = new Geocoder(getApplicationContext(), Locale.ENGLISH);
+		String geoCodedAddress = null;
+		try {
+			List<Address> addressList = geoCoder.getFromLocation(latitude, longitude, 1);
+			if(addressList != null && addressList.size()>0){
+				geoCodedAddress = addressList.get(0).getAddressLine(0);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+		
 		
 		latField.setText(String.valueOf(latitude));
 		longField.setText(String.valueOf(longitude));
 		Location l = new Location(provider);
 		l.setLatitude(13.1139);
 		l.setLongitude(77.5983);
-		distance.setText(String.valueOf(location.distanceTo(l)));
+		distance.setText(geoCodedAddress);
 	}
 
 	@Override

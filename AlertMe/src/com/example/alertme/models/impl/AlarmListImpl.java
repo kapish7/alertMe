@@ -15,7 +15,11 @@ public class AlarmListImpl implements IAlarmList{
 	@Override
 	public boolean addAlarm(Alarm alarm) {
 		// TODO Auto-generated method stub
-		return false;
+		AlarmList alarmList = dbc.getAlarmList();
+		alarmList.getAlarmList().add(alarm);
+		dbc.updateAlarmList(alarmList);
+		dbc.closeConnection();
+		return true;
 	}
 
 	@Override
@@ -31,8 +35,8 @@ public class AlarmListImpl implements IAlarmList{
 		if(dbc.getAlarmList() == null){
 			dbc.updateAlarmList(new AlarmList());
 			alarmList = dbc.getAlarmList();
-			dbc.closeConnection();
 		}
+		dbc.closeConnection();
 		return alarmList;
 	}
 

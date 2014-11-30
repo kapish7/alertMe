@@ -10,6 +10,7 @@ import com.db4o.ta.TransparentActivationSupport;
 import com.db4o.ta.TransparentPersistenceSupport;
 import com.example.alertme.models.Alarm;
 import com.example.alertme.models.AlarmList;
+import com.example.alertme.models.Location;
 
 public class Db4oConnect implements Database{
 	EmbeddedConfiguration config;
@@ -51,5 +52,15 @@ public class Db4oConnect implements Database{
 	public boolean updateAlarmList(AlarmList al){
 		database.store(al);
 		return true;
+	}
+	public Location getLocationByName(Location proto) {
+		// TODO Auto-generated method stub
+		ObjectSet<Location> objectSet = database.queryByExample(proto);
+		
+		if(objectSet.hasNext()){
+			return objectSet.next();
+		}else{
+			return null;
+		}
 	}
 }

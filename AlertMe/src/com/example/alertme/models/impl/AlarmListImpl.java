@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.alertme.database.Db4oConnect;
 import com.example.alertme.models.Alarm;
 import com.example.alertme.models.AlarmList;
+import com.example.alertme.models.Location;
 
 public class AlarmListImpl implements IAlarmList{
 	Db4oConnect dbc;
@@ -25,7 +26,14 @@ public class AlarmListImpl implements IAlarmList{
 	@Override
 	public boolean deleteAlarm(Alarm alarm) {
 		// TODO Auto-generated method stub
-		return false;
+		AlarmList alarmList = dbc.getAlarmList();
+		Location proto = new Location(0, 0, alarm.getLocation().getCompleteAddress());
+		Location l = dbc.getLocationByName(proto);
+		int position = alarmList.getAlarmList().indexOf(new Alarm(null, l));
+		alarmList.getAlarmList().remove(position);
+		dbc.updateAlarmList(alarmList);
+		dbc.closeConnection();
+		return true;
 	}
 
 	@Override

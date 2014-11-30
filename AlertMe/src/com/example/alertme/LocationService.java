@@ -78,7 +78,7 @@ public class LocationService extends Service{
 		return START_STICKY;
 	}
 
-	private boolean startTimerWithDelay(){
+	private synchronized boolean startTimerWithDelay(){
 		final Criteria c = new Criteria();
 
 		//timer = new Timer();
@@ -94,7 +94,8 @@ public class LocationService extends Service{
 				if(currentLocation != null){
 					
 					//iterate over all the alarms and check is any location near by current lcoation
-					for(Alarm a:usersAlarmList.getAlarmList()){
+					for(int i=0; i<usersAlarmList.getAlarmList().size(); i++){
+						Alarm a = usersAlarmList.getAlarmList().get(i);
 						Location temp = new Location(provider);
 						temp.setLatitude(a.getLocation().getLattitude());
 						temp.setLongitude(a.getLocation().getLongitude());

@@ -34,7 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/addAlarmButton"
         android:layout_marginTop="33dp"
-        android:paddingLeft="10px">
+        android:paddingLeft="10px"
+        android:dividerHeight="10dp">
     </ListView>
 
 </RelativeLayout>

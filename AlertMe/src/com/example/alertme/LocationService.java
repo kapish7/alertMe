@@ -6,17 +6,22 @@ import com.example.alertme.models.Alarm;
 import com.example.alertme.models.AlarmList;
 import com.example.alertme.models.impl.AlarmListImpl;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 public class LocationService extends Service{
+	NotificationManager nm;
 	LocationManager locationManager;
 	String provider;
 	Timer timer;
@@ -107,13 +112,23 @@ public class LocationService extends Service{
 							minTime = minTime/60;
 							
 							if(minTime <= 15){
-								Toast.makeText(getApplicationContext(), "You are Near : " + a.getLocation().getCompleteAddress(), Toast.LENGTH_LONG).show();
+								NotificationCompat.Builder notif= new NotificationCompat.Builder(getBaseContext()).setSmallIcon(R.drawable.ic_launcher)
+										  .setContentText("You are Near : " + a.getLocation().getCompleteAddress()).setContentTitle("AlertMe Notification");
+								 notif.setSound(Uri.parse(a.getAlarmTone().getAlarmTone()));
+								 Notification not = notif.build();
+								 nm.notify(1, not);
+								//Toast.makeText(getApplicationContext(), "You are Near : " + a.getLocation().getCompleteAddress(), Toast.LENGTH_LONG).show();
 								int currentAlarmIndex = usersAlarmList.getAlarmList().indexOf(a);
 								usersAlarmList.getAlarmList().remove(currentAlarmIndex);
 							}
 						}else{
 							if(currentLocation.distanceTo(temp)/1000 < minDistanceToAlarm){
-								Toast.makeText(getApplicationContext(), "You are Near : " + a.getLocation().getCompleteAddress(), Toast.LENGTH_LONG).show();
+								NotificationCompat.Builder notif= new NotificationCompat.Builder(getBaseContext()).setSmallIcon(R.drawable.ic_launcher)
+										  .setContentText("You are Near : " + a.getLocation().getCompleteAddress()).setContentTitle("AlertMe Notification");
+								 notif.setSound(Uri.parse(a.getAlarmTone().getAlarmTone()));
+								 Notification not = notif.build();
+								 nm.notify(1, not);
+								//Toast.makeText(getApplicationContext(), "You are Near : " + a.getLocation().getCompleteAddress(), Toast.LENGTH_LONG).show();
 								int currentAlarmIndex = usersAlarmList.getAlarmList().indexOf(a);
 								usersAlarmList.getAlarmList().remove(currentAlarmIndex);
 		

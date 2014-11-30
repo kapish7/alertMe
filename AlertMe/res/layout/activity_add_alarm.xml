@@ -8,14 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AddAlarmActivity" >
 
-    <Button
-        android:id="@+id/saveAlarmButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="106dp"
-        android:text="Save" />
+
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView1"
@@ -24,9 +17,92 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Enter Location"
+        android:textColor="@color/gray"
         android:popupBackground="#000" />
+    
+    <View 
+        android:id="@+id/separator1" 
+		android:background="#ffffff" 
+ 		android:layout_width = "fill_parent"
+ 		android:layout_height="1dip"
+ 		android:layout_marginTop="9sp"
+ 		android:layout_marginBottom="9sp"
+ 		android:layout_below="@+id/autoCompleteTextView1"/>
+    
+     <TextView
+      	android:id="@+id/txtSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alarm Sound" 
+        android:textSize="12sp"
+        android:textColor="@color/gray"
+        android:layout_below="@+id/separator1"/>
+       
+      <TextView
+      	android:id="@+id/txtSoundName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Default" 
+        android:textSize="20sp"
+        android:layout_marginTop="6sp"
+        android:clickable="true"
+        android:selectAllOnFocus="true"
+        android:onClick="selectRingtone"
+        android:textColor="@color/white"
+        android:layout_below="@+id/txtSound"
+        />
+      
+      <View 
+        android:id="@+id/separator2" 
+		android:background="#ffffff" 
+ 		android:layout_width = "fill_parent"
+ 		android:layout_height="1dip"
+ 		android:layout_marginTop="9sp"
+ 		android:layout_marginBottom="9sp"
+ 		android:layout_below="@+id/txtSoundName"/>
+  
+<!--  
+      <Button
+        android:id="@+id/saveAlarmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/separator2"
+        android:text="Save Alarm" />
+      -->
+      
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" >
 
+          
+          <Button
+            android:id="@+id/cancelAlarmButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:textColor="@color/gray"
+            android:text="Cancel"/> 
+            
+       	  <Button
+            android:id="@+id/saveAlarmButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:textColor="@color/gray"
+            android:text="Save"/>
+
+               
+    </LinearLayout>
+        
 </RelativeLayout>

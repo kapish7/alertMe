@@ -15,6 +15,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,8 @@ public class AlarmsListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarms_list);
+		View view = this.getWindow().getDecorView();
+		view.setBackgroundColor(Color.BLACK);
 		//asks for switching ON the GPS
 		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		boolean enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -59,24 +62,11 @@ public class AlarmsListActivity extends Activity {
 			}
 		});
 
-		//starts the background service
-		ToggleButton startJourney = (ToggleButton) findViewById(R.id.startJourneyButton);
-		startJourney.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
-				if(isChecked){
-					startService(new Intent(getApplicationContext(), LocationService.class));
-				}else{
-					stopService(new Intent(getApplicationContext(),LocationService.class));
-				}
-			}
-		});
+		
 
 		//retreives all aalrms and add it to the list view
 		AlarmListImpl ali = new AlarmListImpl(getApplicationContext());
-		AlarmList usersAlarmList= ali.getAlarms();
+		final AlarmList usersAlarmList= ali.getAlarms();
 		ListView lv = (ListView) findViewById(R.id.listView1);
 		ArrayList<String> alarmsList = new ArrayList<String>();
 		for(Alarm a:usersAlarmList.getAlarmList()){
@@ -84,7 +74,20 @@ public class AlarmsListActivity extends Activity {
 		}
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, alarmsList);
 		lv.setAdapter(arrayAdapter);
+		//starts the background service
+				ToggleButton startJourney = (ToggleButton) findViewById(R.id.startJourneyButton);
+				startJourney.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						// TODO Auto-generated method stub
+						if(isChecked){
+							startService(new Intent(getApplicationContext(), LocationService.class));
+						}else{
+							stopService(new Intent(getApplicationContext(),LocationService.class));
+						}
+					}
+				});
 	}
 
 	@Override
